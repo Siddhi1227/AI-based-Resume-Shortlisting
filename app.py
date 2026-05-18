@@ -223,6 +223,17 @@ button:hover {
         box-shadow: 0 0 30px 0 rgba(14, 165, 233, 0.1);
     }
 }
+
+.file-name-banner {
+    background: #fef3c7;
+    color: #92400e;
+    border: 1px solid #f59e0b;
+    padding: 18px 22px;
+    border-radius: 18px;
+    margin-bottom: 22px;
+    font-size: 16px;
+    font-weight: 600;
+}
 </style>
 """
 
@@ -266,6 +277,9 @@ st.markdown(
     <div class='page-hero'>
         <h1>🎯 Resume Shortlisting System</h1>
         <p>Automated candidate ranking with clean analytics, skill detection, and professional matching.</p>
+    </div>
+    <div class='file-name-banner'>
+        ⚠️ Please upload resumes with the file name set to the candidate's full name. If the system cannot reliably extract the name, the uploaded PDF/DOCX name will be used in results.
     </div>
     """,
     unsafe_allow_html=True
@@ -404,13 +418,18 @@ if process_button:
             
             # Build result
             candidate_name = analysis["name"]
-            if candidate_name == "Unknown":
-                inferred_name = uploaded_file.name.rsplit('.', 1)[0]
-                inferred_name = re.sub(r'[-_]+', ' ', inferred_name).strip()
-                inferred_name = re.sub(r'(?i)\b(resume|cv|curriculum vitae)\b', '', inferred_name).strip()
-                if re.match(r'^[A-Za-z ]+$', inferred_name) and len(inferred_name.split()) >= 2:
-                    if not re.search(r'(?i)\b(hibernate|spring|docker|kubernetes|react|tamil|nadu|india|resume|cv|curriculum vitae|developer|engineer|manager|consultant|intern)\b', inferred_name):
-                        candidate_name = inferred_name.title()
+            inferred_name = uploaded_file.name.rsplit('.', 1)[0]
+            inferred_name = re.sub(r'[-_]+', ' ', inferred_name).strip()
+            inferred_name = re.sub(r'(?i)\b(resume|cv|curriculum vitae)\b', '', inferred_name).strip()
+            inferred_name = inferred_name.title()
+
+            invalid_name = (
+                candidate_name == "Unknown"
+                or len(candidate_name.split()) < 2
+                or re.search(r'(?i)\b(hibernate|spring|docker|kubernetes|react|tamil|nadu|india|resume|cv|curriculum vitae|developer|engineer|manager|consultant|intern|company|organization|profile|summary)\b', candidate_name)
+            )
+            if invalid_name and inferred_name:
+                candidate_name = inferred_name
 
             result = {
                 "filename": uploaded_file.name,
