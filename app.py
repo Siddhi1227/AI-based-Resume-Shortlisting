@@ -408,7 +408,9 @@ if process_button:
                 inferred_name = uploaded_file.name.rsplit('.', 1)[0]
                 inferred_name = re.sub(r'[-_]+', ' ', inferred_name).strip()
                 inferred_name = re.sub(r'(?i)\b(resume|cv|curriculum vitae)\b', '', inferred_name).strip()
-                candidate_name = inferred_name.title() if inferred_name else "Unknown"
+                if re.match(r'^[A-Za-z ]+$', inferred_name) and len(inferred_name.split()) >= 2:
+                    if not re.search(r'(?i)\b(hibernate|spring|docker|kubernetes|react|tamil|nadu|india|resume|cv|curriculum vitae|developer|engineer|manager|consultant|intern)\b', inferred_name):
+                        candidate_name = inferred_name.title()
 
             result = {
                 "filename": uploaded_file.name,
