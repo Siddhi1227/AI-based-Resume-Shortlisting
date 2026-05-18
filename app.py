@@ -403,9 +403,16 @@ if process_button:
             )
             
             # Build result
+            candidate_name = analysis["name"]
+            if candidate_name == "Unknown":
+                inferred_name = uploaded_file.name.rsplit('.', 1)[0]
+                inferred_name = re.sub(r'[-_]+', ' ', inferred_name).strip()
+                inferred_name = re.sub(r'(?i)\b(resume|cv|curriculum vitae)\b', '', inferred_name).strip()
+                candidate_name = inferred_name.title() if inferred_name else "Unknown"
+
             result = {
                 "filename": uploaded_file.name,
-                "name": analysis["name"],
+                "name": candidate_name,
                 "education": analysis["education"],
                 "experience_years": analysis["experience_years"],
                 "skills_found": analysis["skills_found"],

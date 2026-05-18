@@ -31,26 +31,63 @@ def extract_name(text: str) -> str:
         short_text = text[:1000]
         doc = nlp(short_text)
         
-        # Try to find PERSON entity
+        # Try to find the most likely PERSON entity
+        person_names = []
         for ent in doc.ents:
             if ent.label_ == "PERSON":
                 name = ent.text.strip()
-                # Validate it's likely a real name (not just single letter or number)
-                if len(name) > 1 and not name.isdigit():
-                    return name
-        
-        # Fallback: Look for name patterns (usually at the top of resume)
-        lines = text.split('\n')
-        for line in lines[:10]:
-            line = line.strip()
-            # Check if line looks like a name (2-4 words, not too long)
+                if len(name) > 1 and not name.isdigit() and not re.search(r'email|phone|linkedin|github|portfolio', name, re.I):
+                    person_names.append(name)
+        if person_names:
+            multi_word_names = [n for n in person_names if len(n.split()) > 1]
+            return max(multi_word_names or person_names, key=len)
+
+        # Fallback: look for name patterns in the top section of the resume
+        lines = [line.strip() for line in text.splitlines() if line.strip()]
+        top_lines = lines[:12]
+        generic_terms = re.compile(r'\b(?:email|phone|contact|linkedin|github|portfolio|address|objective|summary|profile|experience|skills|education|qualification|resume|cv|curriculum vitae|professional|developer|engineer|manager|analyst|consultant|intern|student|company|organization|institute|university|college)\b', re.I)
+
+        def clean_name_line(line: str) -> str:
+            line = re.sub(r'^(?:name|full name)[:\-]\s*', '', line, flags=re.I).strip()
+            line = re.sub(r'\b(?:resume|cv|curriculum vitae)\b', '', line, flags=re.I).strip()
+            line = re.sub(r'\s*[|\-]\s*.*$', '', line).strip()
+            return line
+
+        def looks_like_name(line: str) -> bool:
+            if not line or len(line) < 5 or len(line) > 60:
+                return False
+            if re.search(r'[@\d]|http|www\.|mailto:|\(|\)', line, re.I):
+                return False
+            if generic_terms.search(line):
+                return False
+
             words = line.split()
-            if 1 <= len(words) <= 4 and len(line) < 50 and len(line) > 2:
-                # Avoid common non-name patterns
-                if not any(skip in line.lower() for skip in ['email', 'phone', 'address', 'linkedin', 'github', 'portfolio']):
-                    if line and not line.startswith('Subject') and not line.startswith('Objective'):
-                        return line
-        
+            if not 2 <= len(words) <= 4:
+                return False
+
+            titlecase_words = sum(
+                1 for word in words if re.match(r"^([A-Z][a-z]+|[A-Z]\.|[A-Z][a-z]+[-'][A-Z][a-z]+)$", word)
+            )
+            if titlecase_words < len(words):
+                return False
+
+            if any(re.match(r'^(hibernate|spring|docker|kubernetes|react|tamil|nadu|india|developer|engineer|manager)$', w, re.I) for w in words):
+                return False
+
+            return True
+
+        for line in top_lines:
+            cleaned = clean_name_line(line)
+            if looks_like_name(cleaned):
+                return cleaned
+
+        for line in top_lines:
+            m = re.match(r'^(?:name|full name)[:\-]\s*(.+)$', line, flags=re.I)
+            if m:
+                candidate = clean_name_line(m.group(1).strip())
+                if looks_like_name(candidate):
+                    return candidate
+
         return "Unknown"
     except Exception as e:
         print(f"Warning: Failed to extract name: {str(e)}")
