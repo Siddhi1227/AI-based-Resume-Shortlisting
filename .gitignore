@@ -1,0 +1,41 @@
+# Virtual Environment
+venv/
+env/
+.venv/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# spaCy models
+en_core_web_sm/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Media files (except those tracked with Git LFS in assets/)
+# *.mp4
+# *.avi
+# *.mov
+# *.mkv
+
+# Streamlit cache
+.streamlit/
+
+# Logs
+*.log
+
+# Resume samples
+resumes/
+FINAL_STATUS.txt
+
