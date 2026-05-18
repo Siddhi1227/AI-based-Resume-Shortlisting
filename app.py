@@ -24,97 +24,139 @@ custom_css = """
     font-family: 'Inter', sans-serif;
 }
 
+body,
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+}
+
 [data-testid="stSidebar"] {
-    background-color: #0f172a;
+    background: #0f172a;
+    color: #e2e8f0;
+    border-right: 1px solid rgba(148, 163, 184, 0.18);
 }
 
 [data-testid="stSidebar"] .stMarkdown {
-    color: white;
+    color: #cbd5e1;
 }
 
-[data-testid="stSidebar"] h1, 
-[data-testid="stSidebar"] h2, 
+[data-testid="stSidebar"] h1,
+[data-testid="stSidebar"] h2,
 [data-testid="stSidebar"] h3,
 [data-testid="stSidebar"] h4,
 [data-testid="stSidebar"] h5,
 [data-testid="stSidebar"] p {
-    color: white;
+    color: #f8fafc;
 }
 
-.metric-card {
-    background-color: #f8fafc;
-    padding: 20px;
-    border-radius: 12px;
-    border-left: 4px solid #10b981;
+.stApp {
+    color: #0f172a;
 }
 
-.candidate-card {
-    background-color: #f8fafc;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-    border-left: 5px solid #10b981;
+.page-hero {
+    background: linear-gradient(135deg, #0f172a 0%, #2563eb 100%);
+    color: #ffffff;
+    padding: 32px;
+    border-radius: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.14);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.page-hero h1 {
+    margin-bottom: 8px;
+    letter-spacing: -0.04em;
+}
+
+.page-hero p {
+    color: rgba(241, 245, 249, 0.92);
+    font-size: 16px;
+}
+
+.section-card,
+.result-card,
+.export-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.08);
+    margin-bottom: 24px;
+    animation: fadeInUp 0.7s ease-out;
+}
+
+.section-header,
+.section-subheader {
+    color: #0f172a;
+}
+
+.section-subheader {
+    color: #475569;
+    margin-top: 6px;
+    margin-bottom: 18px;
 }
 
 .rank-badge {
     display: inline-block;
-    background-color: #10b981;
+    background-color: #2563eb;
     color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
-    font-weight: 600;
-    margin-right: 10px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin-right: 12px;
+    letter-spacing: 0.02em;
 }
 
 .score-bar {
-    height: 8px;
-    background-color: #e5e7eb;
-    border-radius: 4px;
+    height: 12px;
+    background-color: #e2e8f0;
+    border-radius: 999px;
     overflow: hidden;
-    margin: 10px 0;
+    margin: 14px 0;
 }
 
 .score-fill {
     height: 100%;
-    background: linear-gradient(90deg, #ef4444, #f59e0b, #10b981);
-    border-radius: 4px;
+    background: linear-gradient(90deg, #2563eb 0%, #06b6d4 100%);
+    border-radius: 999px;
+    transition: width 0.8s ease;
 }
 
 .skill-pill-found {
     display: inline-block;
-    background-color: #d1fae5;
-    color: #065f46;
-    padding: 4px 10px;
-    border-radius: 16px;
+    background-color: #ecfeff;
+    color: #0f766e;
+    padding: 7px 14px;
+    border-radius: 999px;
     font-size: 12px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    font-weight: 500;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
 .skill-pill-missing {
     display: inline-block;
-    background-color: #fee2e2;
+    background-color: #fef2f2;
     color: #991b1b;
-    padding: 4px 10px;
-    border-radius: 16px;
+    padding: 7px 14px;
+    border-radius: 999px;
     font-size: 12px;
-    margin-right: 5px;
-    margin-bottom: 5px;
-    font-weight: 500;
+    margin-right: 6px;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
 .top-candidate-highlight {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%);
     color: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
+    padding: 24px;
+    border-radius: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 28px 55px rgba(37, 99, 235, 0.18);
+    animation: pulseGlow 3.2s ease-in-out infinite;
 }
 
 .divider {
-    border-bottom: 1px solid #e5e7eb;
-    margin: 20px 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin: 26px 0;
 }
 
 table {
@@ -123,24 +165,63 @@ table {
 }
 
 table thead {
-    background-color: #1f2937;
-    color: white;
-    font-weight: 600;
+    background-color: #1e293b;
+    color: #e2e8f0;
+    font-weight: 700;
+}
+
+table th,
+ table td {
+    padding: 14px;
 }
 
 table th {
-    padding: 12px;
     text-align: left;
-    border-bottom: 2px solid #e5e7eb;
+    border-bottom: 1px solid #cbd5e1;
 }
 
 table td {
-    padding: 12px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 table tbody tr:hover {
-    background-color: #f8fafc;
+    background-color: #eff6ff;
+}
+
+button[kind="primary"] {
+    border-radius: 14px !important;
+    background: linear-gradient(135deg, #2563eb 0%, #0ea5e9 100%) !important;
+    color: #ffffff !important;
+    box-shadow: 0 18px 30px rgba(37, 99, 235, 0.18) !important;
+}
+
+button {
+    font-weight: 600;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 30px 0 rgba(14, 165, 233, 0.1);
+    }
 }
 </style>
 """
@@ -180,7 +261,15 @@ if "results" not in st.session_state:
     st.session_state["results"] = []
 
 # Main content
-st.markdown("# 🎯 Resume Shortlisting System")
+st.markdown(
+    """
+    <div class='page-hero'>
+        <h1>🎯 Resume Shortlisting System</h1>
+        <p>Automated candidate ranking with clean analytics, skill detection, and professional matching.</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # Initialize session state for JD and skills
 if "jd_text_state" not in st.session_state:
@@ -189,11 +278,12 @@ if "detected_skills_state" not in st.session_state:
     st.session_state["detected_skills_state"] = []
 
 # Two column layout for inputs
+st.markdown('<div class="section-card">', unsafe_allow_html=True)
 col_jd, col_upload = st.columns([3, 2])
 
 # Left column: Job Description
 with col_jd:
-    st.markdown("### 📋 Job Description")
+    st.markdown("<h3 class='section-header'>📋 Job Description</h3>", unsafe_allow_html=True)
     
     jd_text = st.text_area(
         "Paste the Job Description here:",
@@ -246,7 +336,7 @@ with col_jd:
 
 # Right column: File Upload
 with col_upload:
-    st.markdown("### 📁 Upload Resumes")
+    st.markdown("<h3 class='section-header'>📁 Upload Resumes</h3>", unsafe_allow_html=True)
     
     uploaded_files = st.file_uploader(
         "Choose PDF or DOCX files:",
@@ -258,6 +348,8 @@ with col_upload:
     st.metric("📄 Files Uploaded", len(uploaded_files))
     
     st.info("✅ Supports: PDF, DOCX formats\n💾 Max file size: 200MB")
+
+st.markdown('</div>', unsafe_allow_html=True)
 
 # Center button
 st.markdown("---")
@@ -341,7 +433,8 @@ if st.session_state["results"]:
     results = st.session_state["results"]
     
     st.markdown("---")
-    st.markdown("## 📊 Analysis Results")
+    st.markdown("<h2 class='section-header'>📊 Analysis Results</h2>", unsafe_allow_html=True)
+    st.markdown("<p class='section-subheader'>Review the candidate ranking, score distribution, and export options below.</p>", unsafe_allow_html=True)
     
     # Metrics
     col1, col2, col3 = st.columns(3)
@@ -360,10 +453,12 @@ if st.session_state["results"]:
     tab1, tab2 = st.tabs(["📊 Rankings", "📈 Score Chart"])
     
     with tab1:
-        st.markdown("### Candidate Rankings")
+        st.markdown('<div class="result-card">', unsafe_allow_html=True)
+        st.markdown("<h3 class='section-header'>Candidate Rankings</h3>", unsafe_allow_html=True)
         
         for idx, candidate in enumerate(results):
             with st.container():
+                st.markdown('<div class="candidate-card">', unsafe_allow_html=True)
                 # Rank badge and name
                 rank_html = f'<span class="rank-badge">#{candidate["rank"]}</span>'
                 score_pct = candidate["final_score"] * 100
@@ -407,6 +502,8 @@ if st.session_state["results"]:
                     st.markdown(skills_html, unsafe_allow_html=True)
                 
                 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
+                st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
     
     with tab2:
         st.markdown("### Score Distribution Chart")
@@ -442,7 +539,7 @@ if st.session_state["results"]:
         st.plotly_chart(fig, use_container_width=True)
         
         # Results table
-        st.markdown("### Detailed Results Table")
+        st.markdown("<h3 class='section-header'>Detailed Results Table</h3>", unsafe_allow_html=True)
         
         df_results = pd.DataFrame([
             {
@@ -460,7 +557,8 @@ if st.session_state["results"]:
     
     # Download section
     st.markdown("---")
-    st.markdown("### 📥 Export Results")
+    st.markdown('<div class="export-card">', unsafe_allow_html=True)
+    st.markdown("<h3 class='section-header'>📥 Export Results</h3>", unsafe_allow_html=True)
     
     # Prepare CSV data
     csv_data = []
@@ -488,6 +586,7 @@ if st.session_state["results"]:
         mime="text/csv",
         use_container_width=True
     )
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Footer
 st.markdown("---")
